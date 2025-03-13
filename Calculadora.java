@@ -1,57 +1,61 @@
-
 import java.util.Scanner;
 
-public class CalculadoraVendas {
+public class Calculadora {
+
+    // Função para calcular o preço total
+    public static double calcularPrecoTotal(int quantidade, double precoUnitario) {
+        return quantidade * precoUnitario;
+    }
+
+    // Função para calcular o troco
+    public static double calcularTroco(double valorPago, double valorTotal) {
+        return valorPago - valorTotal;
+    }
+
+    // Função para exibir o menu
+    public static void exibirMenu() {
+        System.out.println("\nMenu:");
+        System.out.println("[1] - Calcular Preço Total");
+        System.out.println("[2] - Calcular Troco");
+        System.out.println("[3] - Sair");
+    }
+
+    // Função principal
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcao;
-        
-        do {
-            System.out.println("\n=== Calculadora de Vendas ===");
-            System.out.println("[1] - Calcular Preço Total");
-            System.out.println("[2] - Calcular Troco");
-            System.out.println("[3] - Sair");
+
+        // Loop para exibir o menu e processar as escolhas
+        while (true) {
+            exibirMenu();
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             
-            switch (opcao) {
-                case 1:
-                    calcularPrecoTotal(scanner);
-                    break;
-                case 2:
-                    calcularTroco(scanner);
-                    break;
-                case 3:
-                    System.out.println("Saindo... Obrigado por usar a calculadora!");
-                    break;
-                default:
-                    System.out.println("Opção inválida! Tente novamente.");
+            if (opcao == 1) {
+                System.out.print("Informe a quantidade da planta: ");
+                int quantidade = scanner.nextInt();
+                System.out.print("Informe o preço unitário da planta: ");
+                double precoUnitario = scanner.nextDouble();
+                double precoTotal = calcularPrecoTotal(quantidade, precoUnitario);
+                System.out.printf("O preço total da venda é: R$%.2f\n", precoTotal);
+            } 
+            else if (opcao == 2) {
+                System.out.print("Informe o valor pago pelo cliente: ");
+                double valorPago = scanner.nextDouble();
+                System.out.print("Informe o valor total da compra: ");
+                double valorTotal = scanner.nextDouble();
+                double troco = calcularTroco(valorPago, valorTotal);
+                System.out.printf("O troco a ser dado ao cliente é: R$%.2f\n", troco);
+            } 
+            else if (opcao == 3) {
+                System.out.println("Saindo do programa...");
+                break;
+            } 
+            else {
+                System.out.println("Opção inválida! Tente novamente.");
             }
-        } while (opcao != 3);
-        
-        scanner.close();
-    }
-    
-    public static void calcularPrecoTotal(Scanner scanner) {
-        System.out.print("Digite a quantidade de plantas: ");
-        int quantidade = scanner.nextInt();
-        System.out.print("Digite o preço unitário da planta: ");
-        double precoUnitario = scanner.nextDouble();
-        double precoTotal = quantidade * precoUnitario;
-        System.out.printf("Preço total da compra: R$ %.2f\n", precoTotal);
-    }
-    
-    public static void calcularTroco(Scanner scanner) {
-        System.out.print("Digite o valor recebido do cliente: ");
-        double valorRecebido = scanner.nextDouble();
-        System.out.print("Digite o valor total da compra: ");
-        double valorCompra = scanner.nextDouble();
-        
-        if (valorRecebido < valorCompra) {
-            System.out.println("Valor recebido é insuficiente para a compra.");
-        } else {
-            double troco = valorRecebido - valorCompra;
-            System.out.printf("Troco a ser dado: R$ %.2f\n", troco);
         }
+
+        scanner.close();
     }
 }
